@@ -62,7 +62,7 @@ ng config -g cli.packageManager yarn
 
 ## Add webpack resolution property in angular.json
 
-```json
+```
   "resolutions": {
     "webpack": "^5.0.0"
   },
@@ -85,7 +85,7 @@ ng generate component home --project=mfe1
 
 ## Add routing config in both app-routing.module.ts
 
-```typescript
+```
 const routes: Routes = [
   {
     path: '',
@@ -97,13 +97,13 @@ const routes: Routes = [
 
 ## Change default Shell and Mfe1 app.component.html
 
-```html
+```
 <h1>Shell</h1>
 
 <router-outlet></router-outlet>
 ```
 
-```html
+```
 <h1>MFE1</h1>
 
 <router-outlet></router-outlet>
@@ -140,7 +140,7 @@ default-node_modules_rxjs__esm2015_internal_Subject_js-node_modules_rxjs__esm201
 ng generate module Todo --project=mfe1
 ng generate component todo --project=mfe1  
 
-```typescript
+```
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -166,7 +166,7 @@ export class TodoModule { }
 
 ## Add TodoModule to mfe1/app.module.ts
 
-```typescript
+```
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -176,7 +176,7 @@ export class TodoModule { }
 
 ## Add navigation in mfe1/app.component.html
 
-```html
+```
 <h1>MFE1</h1>
 
 <a routerLink="/">Home</a> | 
@@ -195,7 +195,7 @@ ng serve mfe1
 
 ## Add remote config in MFE1 ModuleFederationPlugin (apps/mfe1/webpack.config.js)
 
-```json
+```
     name: "mfe1",
     filename: "mfe1RemoteEntry.js",
     exposes: {
@@ -222,7 +222,7 @@ main.js                                                                         
 Note: right now, everything is loaded in mfe1RemoteEntry.js because of a bug that runtime chunk files.
 This is linked to this webpack config option:
 
-```json
+```
 optimization: {
     // Only needed to bypass a temporary bug
     runtimeChunk: false
@@ -236,7 +236,7 @@ Once solved, mfe1RemoteEntry.js will be few kB and everything will be in a lazy 
 
 ## Add host config in Shell ModuleFederationPlugin (apps/shell/webpack.config.js)
 
-```json
+```
     // Host config
     remotes: {
       "mfe1": "mfe1@http://localhost:3000/mfe1RemoteEntry.js",
@@ -245,7 +245,7 @@ Once solved, mfe1RemoteEntry.js will be few kB and everything will be in a lazy 
 
 ## Add new todo lazy remote route in shell app-routing.module.ts
 
-```typescript
+```
 const routes: Routes = [
   {
     path: '',
@@ -264,7 +264,7 @@ const routes: Routes = [
 
 And add navigation to app component
 
-```html
+```
 <h1>SHELL</h1>
 
 <a routerLink="/">Home</a> | 
@@ -284,7 +284,7 @@ Error: projects/shell/src/app/app-routing.module.ts:15:13 - error TS2307: Cannot
 "mfe1" comes from host config
 "TodoModule" comes from remote config
 
-```typescript
+```
 declare module 'mfe1/TodoModule'
 ```
 
@@ -292,5 +292,75 @@ declare module 'mfe1/TodoModule'
 
 ```
 ng serve shell
+```
+
+## PS1: Loading components instead of modules
+
+It's also possible to directly load a component instead of a module by doing:
+
+```
+function getComponent() {
+  return import('mfe1/TodoModule').then((m) => {
+    return m.TodoComponent;
+  });
+}
+
+
+const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'todo',
+    component: await getComponent()
+  },
+];
+```
+
+But it requires change in tsconfig:
+
+```
+  "target": "es2017",
+  "module": "esnext",
+```
+
+And webpack.config.js
+```
+  experiments: {
+    topLevelAwait: true,
+  },
+```
+
+## PS2: remote var
+
+In webpack.config.js, yt's also possible to remove the hard-coded remote entry endpoint  
+
+```
+  // Host config
+  remotes: {
+    "mfe1": "mfe1", // Removed "mfe1@http://localhost:3000/mfe1RemoteEntry.js"
+  },
+
+```
+
+Add directly add the remote entry endpoint in apps/shell/index.html
+
+```
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Shell</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="http://localhost:3000/mfe1RemoteEntry.js">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
 ```
 
