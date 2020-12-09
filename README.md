@@ -1,12 +1,17 @@
 # NEW APP
 
+Source: https://www.angulararchitects.io/aktuelles/the-microfrontend-revolution-part-2-module-federation-with-angular/
+
+Code: https://github.com/manfredsteyer/module-federation-plugin-example
+https://github.com/manfredsteyer/module-federation-with-angular-dynamic
+
 Create a new "nx-federated-workspace" workspace with two apps "shell" and "mfe1"
 
 ## Angular CLI
 
 ```
-ng new federated-demo-workspace --createApplication="false" --packageManager yarn
-cd federated-demo-workspace
+ng new mfe-demo --createApplication="false" --packageManager yarn
+cd mfe-demo
 ng generate application shell
 ng generate application mfe1
 ```
@@ -14,7 +19,7 @@ ng generate application mfe1
 ## NX CLI
 
 ```
-npx create-nx-workspace@latest federated-demo-nx-workspace  --preset="angular" --appName="shell" --style="scss" --interactive=false --collection=@nrwl/workspace
+npx create-nx-workspace@latest nx-federated-workspace --preset="angular" --appName="shell" --style="scss"
 ng g @nrwl/angular:app mfe1
 
 nx g component my-component --project=mfe1 --classComponent
@@ -30,9 +35,9 @@ ng add @angular-architects/module-federation --project shell --port 5000
 
 For shell app, it will :
 1. update package.json to add @angular-architects/module-federation dependency (which provides ngx-build-plus)
-2. generates default webpack.config.js 
+2. generates default custom builder webpack.config.js 
 3. update angular.json to replace "@angular-devkit/build-angular:" to "ngx-build-plus:"
-4. update angular.json to use specific specified port
+4. update angular.json to assign specified ports
 5. move main.ts content to bootstrap.ts and replace it with dynamic import `import('./bootstrap').catch(err => console.error(err));` to allow lazy loading of shared libraries like @angular/core, common or router (defined in webpack.config.js)
 
 CREATE projects/shell/webpack.config.js (1267 bytes)
@@ -60,11 +65,13 @@ UPDATE projects/mfe1/src/main.ts (58 bytes)
 ng config -g cli.packageManager yarn
 ```
 
-## Add webpack resolution property in angular.json
+## Add webpack resolution property in package.json to force the CLI into webpack 5
+
+(e. g. before the dependencies section) 
 
 ```json
   "resolutions": {
-    "webpack": "^5.0.0"
+    "webpack": "^5.4.0"
   },
 ```
 
@@ -279,13 +286,21 @@ But if we try to run the app we'll get
 Error: projects/shell/src/app/app-routing.module.ts:15:13 - error TS2307: Cannot find module 'mfe1/TodoModule' or its corresponding type declarations.
 ```
 
-## A type definition file for mfe1 module in apps/shell/mfe1.d.ts
+## A typing definition file for mfe1 module in apps/shell/src/app/mfe1.d.ts
 
 "mfe1" comes from host config
 "TodoModule" comes from remote config
 
 ```typescript
 declare module 'mfe1/TodoModule'
+```
+
+Note: check that you have this in `tsconfig.app.json`
+
+```
+    "include": [
+        "src/**/*.d.ts"
+    ]
 ```
 
 ## Run mfe1 and check http://localhost:5000/ to see that "todo works!"
