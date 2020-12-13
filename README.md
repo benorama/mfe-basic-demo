@@ -1,12 +1,18 @@
 # Micro-frontends Basic Demo
 
-This is a step-step basic demo to build a minimal micro-frontends architecture with two apps: a micro-app **mfe1** with a Todo module and a main **shell** app that loads the remote Todo module from **mfe1**.
+This is a step-step basic demo to build a minimal micro-frontends architecture with [Angular 11](http://angular.io).
+
+The demo is based on two apps: 
+- a **mfe1** micro-app with a Todo module,
+- a main **shell** app that loads the remote Todo module from **mfe1**.
 
 ![Apps diagram](mfe-demo-diagram.png)
 
 It's mostly based on Manfred Steyer's [Microfrontend revolution and Module Federation article series](https://www.angulararchitects.io/aktuelles/the-microfrontend-revolution-part-2-module-federation-with-angular/).
 
-To run the demo app simply run the two apps in parallel and go to http://localhost:4200 for the shell app or http://localhost:4300 for the mfe1 app.
+## Running the demo apps
+
+Run the two apps in parallel and go to http://localhost:4200 for the shell app or http://localhost:4300 for the mfe1 app.
 
 ```
 ng serve shell
