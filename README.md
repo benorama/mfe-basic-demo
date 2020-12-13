@@ -10,6 +10,8 @@ The demo is based on two apps:
 
 It's mostly based on Manfred Steyer's [Microfrontend revolution and Module Federation article series](https://www.angulararchitects.io/aktuelles/the-microfrontend-revolution-part-2-module-federation-with-angular/).
 
+Note: for a more advanced demo, you might check [MFE advanced demo](https://github.com/benorama/mfe-advanced-demo), used as a proof of concept to build a micro-frontends architecture with [Angular 11](http://angular.io), [Nx Workspace](https://nx.dev/angular) and [Ngrx Store](http://ngrx.io).
+
 ## Running the demo apps
 
 Run the two apps in parallel and go to http://localhost:4200 for the shell app or http://localhost:4300 for the mfe1 app.
@@ -19,16 +21,18 @@ ng serve shell
 ng serve mfe1
 ```
 
-## Create Angular Workspace
+![Webpack5](mfe-demo-shell.png)
 
-Create the workspace with Yarn as default package manager (required for Webpack 5 and Module Federation plugin).
+## Create the Angular workspace
+
+To start from scratch the demo, create the workspace with Yarn as default package manager (required for Webpack 5 and Module Federation plugin).
 
 ```
 ng new mfe-demo --createApplication="false" --packageManager yarn
 cd mfe-demo
 ```
 
-Create the two apps.
+Then, create the two apps with routing enabled.
 
 ```
 # Create shell app
