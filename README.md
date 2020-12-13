@@ -4,9 +4,14 @@ This is a step-step basic demo to build a minimal micro-frontends architecture w
 
 ![Apps diagram](mfe-demo-diagram.png)
 
-It's mostly based on Manfred Steyer on Microfront and Module Federation series:
-Article: https://www.angulararchitects.io/aktuelles/the-microfrontend-revolution-part-2-module-federation-with-angular/
-Code: https://github.com/manfredsteyer/module-federation-plugin-example
+It's mostly based on Manfred Steyer's [Microfrontend revolution and Module Federation article series](https://www.angulararchitects.io/aktuelles/the-microfrontend-revolution-part-2-module-federation-with-angular/).
+
+To run the demo app simply run the two apps in parallel and go to http://localhost:4200 for the shell app or http://localhost:4300 for the mfe1 app.
+
+```
+ng serve shell
+ng serve mfe1
+```
 
 ## Create Angular Workspace
 
@@ -73,7 +78,7 @@ You'll need to for the CLI to use webpack 5 to be able to use module federation.
 
 Add webpack resolutions property in package.json (e. g. before the dependencies section) and install dependencies
 
-```json
+```
   "private": true,
   "resolutions": {
     "webpack": "^5.4.0"
@@ -153,7 +158,7 @@ ng generate component todo --project=mfe1
 
 Add TodoModule to mfe1/app.module.ts
 
-```typescript
+```
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -196,7 +201,7 @@ ng serve mfe1
 
 Add remote config in MFE1 ModuleFederationPlugin (`apps/mfe1/webpack.config.js`)
 
-```json
+```
     name: "mfe1",
     filename: "mfe1RemoteEntry.js",
     exposes: {
@@ -243,7 +248,7 @@ You'll see the new `mfe1RemoteEntry.js` in the initial chunk files:
 Note: right now, everything is loaded in mfe1RemoteEntry.js because of a bug that runtime chunk files.
 This is linked to this webpack config option:
 
-```json
+```
   optimization: {
     // Only needed to bypass a temporary bug
     runtimeChunk: false
@@ -257,7 +262,7 @@ Once solved, `mfe1RemoteEntry.js` will be only `1.6kB` and everything will be in
 
 Add host config in Shell ModuleFederationPlugin (`apps/shell/webpack.config.js`)
 
-```json
+```
     // Host config
     remotes: {
       "mfe1": "mfe1@http://localhost:4300/mfe1RemoteEntry.js",
