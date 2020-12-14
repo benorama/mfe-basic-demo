@@ -20,7 +20,7 @@ module.exports = {
         
         // Host config
         remotes: {
-          "mfe1": "mfe1@http://localhost:3000/remoteEntry.js",
+          "mfe1": "mfe1@http://localhost:4300/remoteEntry.js",
         },
 
         shared: {
