@@ -201,7 +201,7 @@ const routes: Routes = [
 <router-outlet></router-outlet>
 ```
 
-Run mfe1 and check http://localhost:3000/ to see that "todo works!"
+Run mfe1 and check http://localhost:4300/ to see that "todo works!"
 
 ```
 ng serve mfe1
