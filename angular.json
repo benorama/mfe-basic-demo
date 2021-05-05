@@ -55,7 +55,8 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "extraWebpackConfig": "apps/shell/webpack.prod.config.js"
             },
             "development": {
               "buildOptimizer": false,
@@ -184,7 +185,8 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "extraWebpackConfig": "apps/mfe1/webpack.prod.config.js"
             },
             "development": {
               "buildOptimizer": false,
