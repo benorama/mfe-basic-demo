@@ -1,6 +1,6 @@
 # Micro-frontends Basic Demo
 
-This is a step-step basic demo to build a minimal micro-frontends architecture with [Angular 11](http://angular.io).
+This is a step-step basic demo to build a minimal micro-frontends architecture with [Angular 12 RC1](http://angular.io).
 
 The demo is based on two apps: 
 - a **mfe1** micro-app with a Todo module,
@@ -82,17 +82,6 @@ If your run the apps, you'll get:
 
 ```
 An unhandled exception occurred: Cannot find module 'webpack/lib/container/ModuleFederationPlugin'
-```
-
-You'll need to for the CLI to use webpack 5 to be able to use module federation.
-
-Add webpack resolutions property in package.json (e. g. before the dependencies section) and install dependencies
-
-```
-  "private": true,
-  "resolutions": {
-    "webpack": "^5.4.0"
-  },
 ```
 
 ```
