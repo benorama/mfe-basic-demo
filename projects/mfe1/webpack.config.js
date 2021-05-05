@@ -9,7 +9,8 @@ sharedMappings.register(
 
 module.exports = {
   output: {
-    uniqueName: "mfe1"
+    uniqueName: "mfe1",
+    publicPath: "auto"
   },
   optimization: {
     // Only needed to bypass a temporary bug
@@ -17,23 +18,23 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      
+
         // Remote config: exposed modules
         name: "mfe1",
         filename: "remoteEntry.js",
         exposes: {
              './TodoModule': './projects/mfe1/src/app/todo/todo.module.ts',
         },
-        
+
         // Shared libraries
         shared: {
-          "@angular/core": { singleton: true, strictVersion: true }, 
-          "@angular/common": { singleton: true, strictVersion: true }, 
+          "@angular/core": { singleton: true, strictVersion: true },
+          "@angular/common": { singleton: true, strictVersion: true },
           "@angular/router": { singleton: true, strictVersion: true },
 
           ...sharedMappings.getDescriptors()
         }
-        
+
     }),
     sharedMappings.getPlugin(),
   ],
