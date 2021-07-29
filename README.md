@@ -165,7 +165,7 @@ Add TodoModule to mfe1/app.module.ts
   ],
 ```
 
-Add route and navigation in mfe1/app.component.html
+Add route and navigation in mfe1/app-routing.module.ts and mfe1/app.component.html
 
 ```typescript
 const routes: Routes = [
