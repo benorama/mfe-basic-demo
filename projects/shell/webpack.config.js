@@ -21,13 +21,16 @@ module.exports = {
             ...sharedMappings.getAliases(),
         }
     },
+    experiments: {
+        outputModule: true
+    },
     plugins: [
         new ModuleFederationPlugin({
 
-            // Host config
-            remotes: {
-                "mfe1": "mfe1@http://localhost:4300/mfe1RemoteEntry.js",
-            },
+            library: { type: "module" },
+
+            // Host config (use lazy dynamic routes, based on LookupService)
+            remotes: {},
 
             shared: share({
                 "@angular/core": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
