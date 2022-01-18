@@ -21,13 +21,18 @@ module.exports = {
             ...sharedMappings.getAliases(),
         }
     },
+    experiments: {
+        outputModule: true
+    },
     plugins: [
         new ModuleFederationPlugin({
+
+            library: { type: "module" },
 
             name: "mfe1",
             filename: "mfe1RemoteEntry.js",
             exposes: {
-                './TodoModule': './projects/mfe1/src/app/todo/todo.module.ts',
+                './Module': './projects/mfe1/src/app/todo/todo.module.ts',
             },
 
             shared: share({

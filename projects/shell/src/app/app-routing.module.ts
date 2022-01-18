@@ -1,7 +1,8 @@
+import {loadRemoteModule} from '@angular-architects/module-federation';
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-
+import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
+import {environment} from "../environments/environment";
 
 const routes: Routes = [
     {
@@ -12,9 +13,11 @@ const routes: Routes = [
     {
         path: 'todo',
         loadChildren: () =>
-            import('mfe1/TodoModule').then((m) => {
-                return m.TodoModule;
-            }),
+            loadRemoteModule({
+                type: 'module',
+                remoteEntry: environment.mfe1RemoteEntryUrl,
+                exposedModule: './Module'
+            }).then(m => m.TodoModule)
     },
 ];
 

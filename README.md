@@ -1,6 +1,6 @@
 # Micro-frontends Basic Demo
 
-This is a step-step basic demo to build a minimal micro-frontends architecture with [Angular 12 RC1](http://angular.io).
+This is a step-step basic demo to build a minimal micro-frontends architecture with [Angular 13](http://angular.io).
 
 The demo is based on two apps: 
 - a **mfe1** micro-app with a Todo module,

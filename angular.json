@@ -26,6 +26,7 @@
                         "polyfills": "projects/shell/src/polyfills.ts",
                         "tsConfig": "projects/shell/tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
+                        "aot": true,
                         "assets": [
                             "projects/shell/src/favicon.ico",
                             "projects/shell/src/assets"
@@ -198,7 +199,8 @@
                     "defaultConfiguration": "development",
                     "options": {
                         "extraWebpackConfig": "projects/mfe1/webpack.config.js",
-                        "port": 4300
+                        "port": 4300,
+                        "publicHost": "http://localhost:4300"
                     }
                 },
                 "extract-i18n": {
