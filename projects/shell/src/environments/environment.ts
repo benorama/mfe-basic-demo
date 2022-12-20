@@ -4,7 +4,6 @@
 
 export const environment = {
     production: false,
-    mfe1RemoteEntryUrl: 'http://localhost:4300/mfe1RemoteEntry.js'
 };
 
 /*
