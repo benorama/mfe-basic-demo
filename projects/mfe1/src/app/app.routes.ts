@@ -7,7 +7,7 @@ export const APP_ROUTES: Routes = [
         component: HomeComponent,
     },
     {
-        path: 'todo',
+        path: 'todo-module',
         loadChildren: () => import('./todo/todo.module')
             .then(m => m.TodoModule)
     }

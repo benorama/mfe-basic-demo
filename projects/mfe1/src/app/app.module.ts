@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
 
 import {AppComponent} from './app.component';
-import {TodoModule} from './todo/todo.module';
 import {HomeComponent} from './home/home.component';
 import {APP_ROUTES} from "./app.routes";
 
@@ -15,7 +14,6 @@ import {APP_ROUTES} from "./app.routes";
     imports: [
         BrowserModule,
         RouterModule.forRoot(APP_ROUTES),
-        TodoModule
     ],
     providers: [],
     bootstrap: [AppComponent]
