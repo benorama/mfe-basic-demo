@@ -2,21 +2,14 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {TodoComponent} from './todo.component';
+import {TODO_ROUTES} from "./todo.routes";
 
 @NgModule({
-    declarations: [TodoComponent],
     imports: [
         CommonModule,
-        RouterModule.forChild([
-            {
-                path: '',
-                component: TodoComponent,
-            },
-        ]),
+        RouterModule.forChild(TODO_ROUTES),
     ],
-    exports: [
-        TodoComponent
-    ]
+    declarations: [TodoComponent]
 })
 export class TodoModule {
 }
